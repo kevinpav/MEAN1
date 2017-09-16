@@ -4,7 +4,9 @@
 class Deck {
     constructor(){
         this.cards = [];
-        // reset(this.cards);
+        this.suits = ['spades','clubs','hearts','diamonds'];
+        this.values = ['Ace',2,3,4,5,6,7,8,9,10,'Jack','Queen','King'];
+        this.reset();
         // shuffle(this.cards);
     }
 
@@ -37,22 +39,44 @@ class Deck {
     }
     // Reset deck. Cards will be in order
     reset(){
-        console.log("Resetting cards..");
-        for (let i=1; i < 53; i++){
-            this.cards.push(i);
+        // console.log("Resetting cards..");
+        // for (let i=1; i < 53; i++){
+        //     this.cards.push(i);
+        // }
+        // console.log("done.");
+        // return;
+        for (const suit of this.suits){
+            for (const value of this.values){
+                this.cards.push(new Card(suit, value));
+            }
         }
-        console.log("done.");
-        return;
+        console.log(this.cards);
     }
     // Print the deck of cards
     printDeck(){
         console.log("Printing deck..");
-        for (let i=0; i < this.cards.length; i++){
-            console.log(`${i+1}:${this.cards[i]}`);
+        for (const card of this.cards){
+            card.displayCard();
         }
+        // for (let i=0; i < this.cards.length; i++){
+        //     console.log(`${i+1}:${this.cards[i]}`);
+        // }
     }
 }
 
+class Card {
+    constructor(suit, value){
+        this.suit = suit;
+        this.value = value;
+        this.imgPath = this.getImgPath(suit, value.toString());
+    }
+    displayCard(){
+        console.log(`${this.value} of ${this.suit}`);
+    }
+    getImgPath(suit, value){
+        return ('Cards/' + suit.charAt(0).toLowerCase() + value.charAt(0).toLowerCase() + '.png');
+    }
+}
 // Deck object
 class Player {
     constructor(name){
@@ -85,6 +109,7 @@ class Player {
 let myDeck = new Deck();
 myDeck.reset();
 myDeck.shuffle();
+console.log(myDeck);
 // myCard = myDeck.dealCard();
 // console.log(myCard);
 // myDeck.printDeck();
@@ -93,9 +118,9 @@ const playerOne = new Player("Joe");
 const playerTwo = new Player("Ralph");
 
 // Deal 5 cards
-for (let i=0; i<5; i++){
-    playerOne.takeCard(myDeck);
-    playerTwo.takeCard(myDeck);
-}    
-playerOne.printHand();
-playerTwo.printHand();
+// for (let i=0; i<5; i++){
+//     playerOne.takeCard(myDeck);
+//     playerTwo.takeCard(myDeck);
+// }    
+// playerOne.printHand();
+// playerTwo.printHand();
