@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- <script src="http://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script> -->
+  <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+  <title>Document</title>
+  <script>
+  $(document).ready(
+    function(){
+      $('button').click(function(){
+        // as soon as the AJAX request returns, displayName is invoked and passed data!
+        //https://api.jquery.com/jquery.get/
+        // This call doesn't work with my account - due to privacy settings? .name comes back null.
+        $.get('https://api.github.com/users/kevinpav', displayName);
+      });
+    function displayName(data){
+        if (data.name){
+          $('body').append("<p>"+data.name+"</p>");
+        }
+      }
+    }
+  );
+  </script>
+</head>
+<body>
+<button>Click Me</button>
+</body>
+</html>
