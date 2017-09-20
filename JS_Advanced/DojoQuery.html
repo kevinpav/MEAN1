@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="css/style.css" rel="stylesheet">
+    </head>
+    <body>
+        <button>Click Me</button>
+    </body>
+</html>
+
+
+///CODINGDOJO SOLUTION BELOW///
+function $Dojo(id) {
+    this.myId = document.getElementById(id);
+    this.click = function (callback) {
+        this.myId.addEventListener("click", callback);
+    };
+
+    this.hover = function (hoverin, hoverout) {
+        this.myId.addEventListener("mouseover", hoverin);
+        this.myId.addEventListener("mouseout", hoverout);
+    };
+
+    return this;
+}
