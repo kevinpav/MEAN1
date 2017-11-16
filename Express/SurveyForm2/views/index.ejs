@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Survey Form Revisited</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="css/style.css" rel="stylesheet">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script type ="text/javascript" src="/socket.io/socket.io.js"></script>
+        <script type ="text/javascript">
+            $(document).ready(function() {
+                console.log("document = ready");
+               // this triggers the connection event in our server!
+               var socket = io.connect();
+               // we'll write all the socket stuff after the above line!
+               $('#survey_form').submit(function(e){
+                   e.preventDefault();
+                   console.log("Form submitted..");
+                   socket.emit("posting_form", {
+                       name: $('#name').val(),
+                       location: $('#location').val(),
+                       language: $('#favelang').val(),
+                       comment: $('#comment').val()
+                   });
+                });
+                socket.on('updated_message', function(data){
+                    $('#message').html("Emitted to the server: " + JSON.stringify(data.response));
+                });
+                socket.on('random_number', function(data) {
+                    $('#number').html("Random # emitted from server: " + JSON.stringify(data.response));
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <h1>Survey Form Revisited</h1>
+        <div id="message"></div>
+        <div id="number"></div>
+        <form action="" id="survey_form">
+            <div>
+                <label for="name">Your Name:</label>
+                <input type="text" name="name" id="name">
+            </div>
+            <div>
+                <label for="location">Dojo Location:</label>
+                <select name="location" id="location">
+                    <option value="mountainview">Mountain View</option>
+                    <option value="seattle" selected>Seattle</option>
+                    <option value="sanjose">San Jose</option>
+                </select>
+            </div>
+            <div>
+                <label for="favelang">Favorite Language:</label>
+                <select name="favelang" id="favelang">
+                    <option value="javascript">Javascript</option>
+                    <option value="python">Python</option>
+                    <option value="csharp">C#</option>
+                </select>
+            </div>
+            <div>
+                <label for="comment">Comment (optional):</label><br>
+                <textarea id="comment" name="comment" rows="10" cols="30"></textarea>
+            </div>
+            <input type="submit">
+        </form>
+    </body>
+</html>

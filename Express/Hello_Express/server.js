@@ -1,12 +1,14 @@
-var express = require("express");
-var bodyParser = require("body-parser");
-var session = require("express-session");
+const express = require("express");
+const bodyParser = require("body-parser");
+const session = require("express-session");
+const path = require('path');
+const myPort = process.env.PORT || 8000;
+const app = express();
 
-var app = express();
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/static"));
 app.use(session({secret: 'codingdojorocks', numVisits: 0}));
-app.set('views', __dirname + "/views");
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // var numVisits = 0;  // Counter for numVisits to site
@@ -40,6 +42,6 @@ app.post('/users', function(req, res){
     res.redirect('/');
 });
 
-app.listen(8000, function() {
-    console.log("listening on port 8000..");
+app.listen(myPort, () => {
+    console.log("listening on port ${myPort}..");
 });
